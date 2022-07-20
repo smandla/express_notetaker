@@ -1,7 +1,9 @@
 const express = require("express");
 const fs = require("fs");
+const { randomUUID } = require("crypto");
 const path = require("path");
 const noteData = require("./db/db.json");
+const { random } = require("colors");
 
 const PORT = 3000;
 
@@ -25,9 +27,15 @@ app.get("/notes", (req, res) => {
 });
 app.get("/api/notes", (req, res) => res.json(noteData));
 app.post("/api/notes", (req, res) => {
-  console.log(req.body);
-  noteData.push(req.body);
-  console.log(noteData);
+  const { title, text } = req.body;
+  const newNote = {
+    id: randomUUID(),
+    title: title,
+    text: text,
+  };
+  noteData.push(newNote);
+
+  //   console.log(noteData);
   //   console.log(req.query);
 
   fs.writeFile("./db/db.json", JSON.stringify(noteData), (err) =>
@@ -35,6 +43,7 @@ app.post("/api/notes", (req, res) => {
   );
   res.send(noteData);
 });
+
 app.listen(PORT, () => {
   console.log(`Example app listening at https://localhost:${PORT}`);
 });
