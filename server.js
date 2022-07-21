@@ -43,7 +43,9 @@ app.post("/api/notes", (req, res) => {
   );
   res.send(noteData);
 });
-
+app.delete("/api/notes/:id", (req, res) => {
+  console.log(req.params.id);
+});
 app.listen(PORT, () => {
   console.log(`Example app listening at https://localhost:${PORT}`);
 });
