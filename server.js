@@ -3,7 +3,6 @@ const fs = require("fs");
 const { randomUUID } = require("crypto");
 const path = require("path");
 const noteData = require("./db/db.json");
-const { random } = require("colors");
 
 const PORT = process.env.PORT || 3000;
 
