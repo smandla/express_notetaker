@@ -25,6 +25,7 @@ app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 app.get("/api/notes", (req, res) => res.json(noteData));
+
 app.post("/api/notes", (req, res) => {
   const { title, text } = req.body;
   const newNote = {
@@ -33,15 +34,12 @@ app.post("/api/notes", (req, res) => {
     text: text,
   };
   noteData.push(newNote);
-
-  //   console.log(noteData);
-  //   console.log(req.query);
-
   fs.writeFile("./db/db.json", JSON.stringify(noteData), (err) =>
     err ? console.error(err) : console.log("Success")
   );
   res.send(noteData);
 });
+
 app.delete("/api/notes/:id", (req, res) => {
   console.log(req.params.id);
   const index = noteData
